@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>addCountry</title>
+</head>
+<body>
+	<form>
+		<fieldset>
+			<legend>Europe</legend>
+			<p id="result"></p>
+		</fieldset>
+		<br />
+		<button onclick="addCountries(); return false;">Add country</button>
+		<button onclick="delMore();return false;">Del countries</button>
+		<button onclick="sortAll();return false;">Sort</button>
+	</form>
+	</form>
+	<script>
+		var countries = ['Bulgaria', 'Italy', 'France', 'Germany', 'England'];
+		var result = document.getElementById('result');
+		function rendCountries() {
+			var html = '<table><tr><td colspan="2"><label><input type="checkbox" id="allC" onchange="markAll();return false;" />Countries</label></td></tr>';
+			for(var i=0; i <= countries.length-1; i++){
+				html += '<tr><td><label><input type="checkbox" id="index'+i+'" />'+countries[i]+'</label></td><td> <button onclick="delCountries('+i+');">X</button></td></tr>';
+			}
+			html += '</table>';
+			result.innerHTML = html;
+		}
+		rendCountries();
+
+		function delCountries(elem){
+			countries.splice(elem, 1);
+			rendCountries();
+		}
+
+		function addCountries(){
+			var newString = prompt('Please, write some contry from Europe');
+			var conf = confirm('First?');
+			if(conf){
+				countries.unshift(newString);
+			}else{
+				countries.push(newString);
+			}
+			rendCountries();
+		}
+
+		function delMore(){
+			for(var i = countries.length-1; i >= 0 ; i--){
+				if(document.getElementById('index'+i+'').checked){
+					countries.splice(i, 1);
+				}
+			}
+			rendCountries();
+		}
+
+		function markAll(){
+			for(var i=0; i <= countries.length-1; i++){
+				if(document.getElementById('allC').checked == true){
+					if(document.getElementById('index'+i+'').checked == false){
+						document.getElementById('index'+i+'').checked = true;
+					}
+				}else{
+					if(document.getElementById('index'+i+'').checked == true){
+						document.getElementById('index'+i+'').checked = false;
+					}
+				}
+				
+			}
+		}
+		 function sortAll(){
+		 	countries.sort();
+		 	rendCountries();
+		 }
+	</script>
+</body>
+</html>
